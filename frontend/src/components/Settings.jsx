@@ -54,11 +54,6 @@ function Settings() {
     }
   };
 
-  const handleNotifications = () => {
-    // Navigate to notifications page or show notification settings
-    navigate('/notifications');
-  };
-
   const handleChangePassword = () => {
     navigate('/change-password');
   };
@@ -140,52 +135,22 @@ function Settings() {
         </div>
       </section>
 
-      {/* Notifications Section */}
-      <section className="settings-section">
-        <h2 className="section-title">NOTIFICATIONS</h2>
-        <div className="setting-card" onClick={handleNotifications}>
-          <div className="setting-content">
-            <div className="setting-icon notifications-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M18 8A6 6 0 0 0 6 2c-3.314 0-6 2.686-6 6v2c0 2.962 1.637 5.543 4 6.819V22a1 1 0 0 0 1.532.948c.4-.244.836-.48 1.312-.748A9.98 9.98 0 0 0 12 22a9.98 9.98 0 0 0 8.156-4.8c.476.268.912.504 1.312.748A1 1 0 0 0 22.532 22v-5.181c2.363-1.276 4-3.857 4-6.819V8z"/>
-              </svg>
-            </div>
-            <span className="setting-label">Notifications</span>
-          </div>
-          <svg className="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </div>
-      </section>
-
       {/* Account Section */}
       <section className="settings-section">
         <h2 className="section-title">ACCOUNT</h2>
         
-        <div className="setting-card account-card" onClick={handleChangePassword}>
-          <div className="setting-content">
-            <div className="setting-icon change-password-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-            </div>
-            <span className="setting-label">Change Password</span>
-          </div>
-          <svg className="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </div>
-
         <div className="setting-card account-card logout-card" onClick={handleLogout}>
           <div className="setting-content">
             <div className="setting-icon logout-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                <polyline points="16,17 21,12 16,7"/>
+                <path d="M9 21H5a2 2 0 0 1-2-2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h5"/>
+                <polyline points="7,17 13,11 9,11"/>
               </svg>
             </div>
-            <span className="setting-label">Log Out</span>
+            <div className="setting-info">
+              <h3>Log Out</h3>
+              <p>Sign out of your account</p>
+            </div>
           </div>
           <svg className="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M9 18l6-6-6-6"/>

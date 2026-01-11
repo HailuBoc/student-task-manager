@@ -6,7 +6,6 @@ import TaskList from './components/TaskList';
 import FilterBar from './components/FilterBar';
 import SearchBar from './components/SearchBar';
 import EditModal from './components/EditModal';
-import NotificationManager from './components/NotificationManager';
 import './App.css';
 
 function App() {
@@ -122,7 +121,6 @@ function App() {
 
   return (
     <div className="App">
-      <NotificationManager tasks={tasks} />
       <Header onAddTask={() => setShowAddForm(true)} />
       
       <main className="main-content">

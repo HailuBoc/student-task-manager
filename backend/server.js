@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 require('dotenv').config();
     
 const app = express();
@@ -24,16 +23,23 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/student-tas
 
 // User Schema
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  passwordHash: { type: String, required: true },
-  settings: {
-    darkMode: { type: Boolean, default: false },
-    pushAlerts: { type: Boolean, default: true },
-    emailReports: { type: Boolean, default: false },
-    emailNotifications: { type: Boolean, default: true }
+  name: {
+    type: String,
+    required: true
   },
-  createdAt: { type: Date, default: Date.now }
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  passwordHash: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const User = mongoose.model('User', userSchema);
@@ -144,69 +150,7 @@ app.get('/api/auth/profile', authenticateToken, async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    res.json({ user, settings: user.settings });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// PUT /api/auth/settings
-app.put('/api/auth/settings', authenticateToken, async (req, res) => {
-  try {
-    const { darkMode, pushAlerts, emailReports } = req.body;
-    
-    const updateData = {};
-    if (darkMode !== undefined) updateData['settings.darkMode'] = darkMode;
-    if (pushAlerts !== undefined) updateData['settings.pushAlerts'] = pushAlerts;
-    if (emailReports !== undefined) updateData['settings.emailReports'] = emailReports;
-
-    const user = await User.findByIdAndUpdate(
-      req.user.userId,
-      updateData,
-      { new: true, runValidators: true }
-    ).select('-passwordHash');
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    res.json({
-      message: 'Settings updated successfully',
-      user: { id: user._id, name: user.name, email: user.email },
-      settings: user.settings
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// PUT /api/auth/change-password
-app.put('/api/auth/change-password', authenticateToken, async (req, res) => {
-  try {
-    const { currentPassword, newPassword } = req.body;
-
-    if (!currentPassword || !newPassword) {
-      return res.status(400).json({ error: 'Current password and new password are required' });
-    }
-
-    if (newPassword.length < 6) {
-      return res.status(400).json({ error: 'New password must be at least 6 characters long' });
-    }
-
-    const user = await User.findById(req.user.userId);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.passwordHash);
-    if (!isCurrentPasswordValid) {
-      return res.status(401).json({ error: 'Current password is incorrect' });
-    }
-
-    const newPasswordHash = await bcrypt.hash(newPassword, 10);
-    await User.findByIdAndUpdate(req.user.userId, { passwordHash: newPasswordHash });
-
-    res.json({ message: 'Password changed successfully' });
+    res.json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

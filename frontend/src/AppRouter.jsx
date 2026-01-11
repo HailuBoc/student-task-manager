@@ -6,7 +6,6 @@ import App from './App';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Settings from './components/Settings';
-import Notifications from './components/Notifications';
 
 function AppRouter() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -77,14 +76,6 @@ function AppRouter() {
             isAuthenticated ? 
               <Settings /> : 
               <Navigate to="/login" state={{ from: '/settings' }} replace />
-          } 
-        />
-        <Route 
-          path="/notifications" 
-          element={
-            isAuthenticated ? 
-              <Notifications /> : 
-              <Navigate to="/login" state={{ from: '/notifications' }} replace />
           } 
         />
         <Route 

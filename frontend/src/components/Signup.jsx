@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { authAPI } from '../api';
 import '../App.css';
@@ -18,6 +18,14 @@ function Signup({ onSignupSuccess }) {
 
   // Get the redirect path from location state
   const from = location.state?.from || '/dashboard';
+
+  useEffect(() => {
+    // Apply dark mode on component mount
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+      document.documentElement.classList.add('dark-mode');
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
